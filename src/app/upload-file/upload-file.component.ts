@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../Service/service.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-upload-file',
@@ -13,6 +14,8 @@ export class UploadFileComponent implements OnInit {
     file: ['', Validators.required],
     description: ['', Validators.maxLength(64)]
   });
+  uuidList: string[] = [];
+  uploadSubscription: Subscription;
   file: File;
 
   constructor(private uploadService: ServiceService, private fb: FormBuilder) {}
@@ -43,9 +46,9 @@ export class UploadFileComponent implements OnInit {
     // append the configJSON to the form data
     formData.append('setting', JSON.stringify(configJSON));
 
-    this.uploadService.uploadFile(formData).subscribe((res) => {
-      console.log(res)
-    });
+    this.uploadSubscription = this.uploadService.uploadFile(formData).subscribe((res) => {
+      console.log(res);
+    }, (err) => { console.log(err) });
 
   }
 
@@ -53,6 +56,18 @@ export class UploadFileComponent implements OnInit {
     if (event.target.files.length > 0) {
       this.file = event.target.files[0];
     }
+
+  }
+
+  /**
+   * Abort the Uploading file and reset the form.
+  */
+  abort() {
+    this.form.reset();
+    console.log('abort')
+    this.uploadSubscription.unsubscribe();
+    this.uploadSubscription.closed;
+    this.uploadSubscription.remove(this.uploadSubscription);
 
   }
 }
