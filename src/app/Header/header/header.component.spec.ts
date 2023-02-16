@@ -1,26 +1,24 @@
-import { ReactiveFormsModule } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ServiceService } from '../Service/service.service';
+import { ServiceService } from 'src/app/Service/service.service';
 
-import { UploadFileComponent } from './upload-file.component';
+import { HeaderComponent } from './header.component';
 
-describe('UploadFileComponent', () => {
-  let component: UploadFileComponent;
-  let fixture: ComponentFixture<UploadFileComponent>;
-  let mockService: jasmine.SpyObj<ServiceService>;
+describe('HeaderComponent', () => {
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
+  let mockService: any;
 
   beforeEach(async () => {
     mockService = jasmine.createSpyObj('ServiceService', ['fileUpload', 'updateUploadStatus']);
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [UploadFileComponent],
+      declarations: [HeaderComponent],
       providers: [{ provide: ServiceService, useValue: mockService }]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UploadFileComponent);
+    fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

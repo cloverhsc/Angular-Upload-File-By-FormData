@@ -4,23 +4,30 @@
   [formGroup]="form"
   enctype="multipart/form-data"
 >
-  <label for="file">File</label>
+  <label for="file" class="form-label badge bg-secondary accordion-header"
+    >File</label
+  >
   <input
     type="file"
     name="upload_file"
     id="file"
-    (change)="uploadFile($event)"
+    class="form-control"
+    (change)="extractFile($event)"
   />
+  <br />
 
-  <label for="description">Description</label>
+  <label
+    for="description"
+    class="form-label badge bg-secondary accordion-header"
+    >Description</label
+  >
   <input
     type="text"
     name="description"
     id="description"
+    class="form-control"
     formControlName="description"
   />
-  <br /><button type="submit">Submit</button>
-  <div>
-    <button type="button" (click)="abort()">Cancel</button>
-  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>

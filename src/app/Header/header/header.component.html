@@ -1,0 +1,33 @@
+<div class="upload-task">
+  <section id="list">
+    <h3>Uploading List</h3>
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let file of service.UploadTasks">
+        <div class="row">
+          <div class="col-2">
+            <p>{{ file.title }}</p>
+          </div>
+          <div class="col-4">
+            <p>{{ file.progress }}</p>
+          </div>
+          <div class="col-4">
+            <p>{{ file.status }}</p>
+          </div>
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="abort(file.uuid)"
+            >
+              Abort
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section id="form">
+    <app-upload-file></app-upload-file>
+  </section>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../Service/service.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-upload-file',
@@ -15,13 +15,17 @@ export class UploadFileComponent implements OnInit {
     description: ['', Validators.maxLength(64)]
   });
   uuidList: string[] = [];
-  uploadSubscription: Subscription;
+  url = 'http://localhost:3000/upload';
   file: File;
 
   constructor(private uploadService: ServiceService, private fb: FormBuilder) {}
 
   ngOnInit(): void {}
 
+  /**
+   * Submit Upload File Form.
+   * Pass form data to the upload service.
+   */
   postForm() {
     const formData = new FormData();
     const configJSON = {
@@ -38,36 +42,25 @@ export class UploadFileComponent implements OnInit {
     configJSON.description = this.form.value.description;
     configJSON.file_name = this.form.get('file').value.name;
 
-    console.log(configJSON);
-
     // append the file to the form data
     formData.append('upload_file', this.form.get('file').value);
 
     // append the configJSON to the form data
     formData.append('setting', JSON.stringify(configJSON));
 
-    this.uploadSubscription = this.uploadService.uploadFile(formData).subscribe((res) => {
-      console.log(res);
-    }, (err) => { console.log(err) });
-
-  }
-
-  uploadFile(event) {
-    if (event.target.files.length > 0) {
-      this.file = event.target.files[0];
-    }
+    this.uploadService.fileUpload(this.url, formData, configJSON.file_name)
+    this.form.reset();
 
   }
 
   /**
-   * Abort the Uploading file and reset the form.
-  */
-  abort() {
-    this.form.reset();
-    console.log('abort')
-    this.uploadSubscription.unsubscribe();
-    this.uploadSubscription.closed;
-    this.uploadSubscription.remove(this.uploadSubscription);
+   * Extract the file from the input field then save in the file variable.
+   * @param event : Event
+   */
+  extractFile(event) {
+    if (event.target.files.length > 0) {
+      this.file = event.target.files[0];
+    }
 
   }
 }

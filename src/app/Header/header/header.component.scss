@@ -1,0 +1,20 @@
+.upload-task {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+#list {
+  width: 50%;
+  height: 70vh;
+  background-color: darkgray;
+}
+
+#form {
+  width: 50%;
+  height: 70vh;
+  background-color: cadetblue;
+}
+
+.list-group {
+  padding: 20px;
+}
