@@ -17,6 +17,7 @@
             <button
               type="button"
               class="btn btn-danger"
+              [attr.data-uuid]="file.uuid"
               (click)="abort(file.uuid)"
             >
               Abort

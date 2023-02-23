@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ElementRef } from '@angular/core';
 import { ServiceService } from 'src/app/Service/service.service';
 
 
@@ -9,7 +9,7 @@ import { ServiceService } from 'src/app/Service/service.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  constructor(public service: ServiceService) {}
+  constructor(public service: ServiceService, private element: ElementRef) {}
 
   ngOnInit(): void {}
 
@@ -20,6 +20,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   abort(uuid: string) {
     this.service.UploadTasks.find(task => task.uuid === uuid).task.unsubscribe();
     this.service.updateUploadStatus({ message: 'Aborted', uuid })
+
+    // disable Abort button
+    this.element.nativeElement.querySelector(`[data-uuid="${uuid}"]`).disabled = true;
   }
 
   ngOnDestroy(): void {}
