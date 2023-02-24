@@ -7,13 +7,15 @@ import { faker } from '@faker-js/faker';
   providedIn: 'root'
 })
 export class ServiceService {
+
+  // UploadTasks array to store the upload tasks.
   UploadTasks: IUploadTask[] = [];
 
   constructor(private http: HttpClient) {}
 
   /**
    * Upload the form data to the upload service API endpoint.
-   * And push the upload task to the UploadTasks array.
+   * And push the upload task to the UploadTasks array for Abort function.
    * @param url : Upload service API endpoint
    * @param formData : upload file form data
    * @param fileName : Upload file name.
